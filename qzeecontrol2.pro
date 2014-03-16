@@ -10,7 +10,8 @@ QT += bluetooth
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    btconnector.cpp
+    btconnector.cpp \
+    settingsadapter.cpp
 
 # Installation path
 # target.path =
@@ -20,4 +21,5 @@ include(qtquick2controlsapplicationviewer/qtquick2controlsapplicationviewer.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    btconnector.h
+    btconnector.h \
+    settingsadapter.h
