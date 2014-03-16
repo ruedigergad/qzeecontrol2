@@ -19,7 +19,7 @@ ApplicationWindow {
     StackView {
         id: mainStackView
 
-        TabView {
+        initialItem: TabView {
             id: mainTabView
 
             anchors.fill: parent
