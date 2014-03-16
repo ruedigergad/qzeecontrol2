@@ -125,6 +125,10 @@ Tab {
 
         BtConnector {
             id: btConnector
+
+            onDataUpdated: {
+                console.log(data)
+            }
         }
     }
 }

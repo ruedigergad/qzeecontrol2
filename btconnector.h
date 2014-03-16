@@ -103,6 +103,8 @@ signals:
     void xChanged(int val);
     void yChanged(int val);
 
+    void dataUpdated(QString data);
+
 private slots:
     void readData();
     void socketConnected();

@@ -19,6 +19,8 @@
 
 #include "btconnector.h"
 
+#include <QStringList>
+
 BtConnector::BtConnector(QObject *parent)
     : QObject(parent){
     _threshold = 50;
@@ -165,6 +167,20 @@ void BtConnector::readData(){
 
         _oldButtonMap = buttonMap;
     }
+
+    QStringList outputData;
+    outputData << QString::number(_x);
+    outputData << QString::number(_y);
+    outputData << (_a ? "1" : "0");
+    outputData << (_b ? "1" : "0");
+    outputData << (_c ? "1" : "0");
+    outputData << (_d ? "1" : "0");
+    outputData << (_left ? "1" : "0");
+    outputData << (_right ? "1" : "0");
+    outputData << (_up ? "1" : "0");
+    outputData << (_down ? "1" : "0");
+
+    emit dataUpdated(outputData.join(" "));
 }
 
 void BtConnector::socketConnected() {
