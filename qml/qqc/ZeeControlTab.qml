@@ -32,6 +32,13 @@ Tab {
                     placeholderText: "Please enter a Zeemote address or scan."
                     text: address
                     width: zeeControlTab.width * 0.5
+
+                    onTextChanged: {
+                        if (text !== "") {
+                            console.log("Storing address " + address + " for Zeemote " + n)
+                            settingsAdapter.setString("ZeemoteAddress_" + n, address)
+                        }
+                    }
                 }
 
                 Button {
@@ -128,6 +135,14 @@ Tab {
 
             onDataUpdated: {
                 console.log(data)
+            }
+        }
+
+        SettingsAdapter {
+            id: settingsAdapter
+
+            Component.onCompleted: {
+                zeeControlTab.address = readString("ZeemoteAddress_" + n, "")
             }
         }
     }
