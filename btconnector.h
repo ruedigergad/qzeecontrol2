@@ -30,6 +30,8 @@ class BtConnector : public QObject
 
     Q_PROPERTY(int threshold READ threshold NOTIFY thresholdChanged WRITE setThreshold)
 
+    Q_PROPERTY(bool connected READ connectionStatus NOTIFY connectedChanged)
+
     Q_PROPERTY(bool up READ up NOTIFY upChanged)
     Q_PROPERTY(bool down READ down NOTIFY downChanged)
     Q_PROPERTY(bool left READ left NOTIFY leftChanged)
@@ -58,6 +60,8 @@ public:
         thresholdChanged(_threshold);
     }
 
+    bool connectionStatus() {return _connected;}
+
     bool up(){return _up;}
     bool down(){return _down;}
     bool left(){return _left;}
@@ -84,6 +88,8 @@ signals:
 
     void thresholdChanged(int val);
 
+    void connectedChanged(bool val);
+
     void upChanged(bool val);
     void downChanged(bool val);
     void leftChanged(bool val);
@@ -99,11 +105,15 @@ signals:
 
 private slots:
     void readData();
+    void socketConnected();
+    void socketDisconnected();
 
 private:
     QBluetoothSocket *socket;
 
     int _threshold;
+
+    bool _connected;
 
     bool _up;
     bool _down;
@@ -119,6 +129,11 @@ private:
     int _y;
 
     char _oldButtonMap;
+
+    void setConnected(bool val) {
+        _connected = val;
+        connectedChanged(_connected);
+    }
 
     void setA(bool val){
         _a = val;

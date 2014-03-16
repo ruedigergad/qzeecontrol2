@@ -29,7 +29,7 @@ Tab {
                 TextField {
                     id: addressTextField
 
-                    placeholderText: "Enter Zeemote address or scan."
+                    placeholderText: "Please enter a Zeemote address or scan."
                     text: address
                     width: zeeControlTab.width * 0.5
                 }
@@ -49,10 +49,15 @@ Tab {
                 id: connectButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Connect"
+                enabled: addressTextField.text !== ""
+                text: btConnector.connected ? "Disconnect" : "Connect"
 
                 onClicked: {
-                    btConnector.connect(address, 1)
+                    if (! btConnector.connected) {
+                        btConnector.connect(address, 1)
+                    } else {
+                        btConnector.disconnect()
+                    }
                 }
             }
 

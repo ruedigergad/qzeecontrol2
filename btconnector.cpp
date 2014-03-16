@@ -23,6 +23,8 @@ BtConnector::BtConnector(QObject *parent)
     : QObject(parent){
     _threshold = 50;
 
+    _connected = false;
+
     _up = false;
     _down = false;
     _left = false;
@@ -45,8 +47,8 @@ void BtConnector::connect(QString address, int port){
         delete socket;
 
     socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
-    QObject::connect(socket, SIGNAL(connected()), this, SIGNAL(connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(socketConnected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
     QObject::connect(socket, SIGNAL(error(QBluetoothSocket::SocketError)), this, SIGNAL(error(QBluetoothSocket::SocketError)));
 
     qDebug("Connecting...");
@@ -163,4 +165,14 @@ void BtConnector::readData(){
 
         _oldButtonMap = buttonMap;
     }
+}
+
+void BtConnector::socketConnected() {
+    setConnected(true);
+    emit connected();
+}
+
+void BtConnector::socketDisconnected() {
+    setConnected(false);
+    emit disconnected();
 }
