@@ -22,8 +22,6 @@ ApplicationWindow {
         initialItem: TabView {
             id: mainTabView
 
-            anchors.fill: parent
-
             ZeeControlTab {
                 id: zee1
                 n: 1

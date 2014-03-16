@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
+import QZeeControl2 1.0
 
 Tab {
     id: zeeControlTab
@@ -37,6 +38,24 @@ Tab {
                     mainStackView.push({item: Qt.resolvedUrl("BtSelectDialog.qml"), properties: {parentTab: zeeControlTab}})
                 }
             }
+
+            Button {
+                id: connectButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Connect"
+
+                onClicked: {
+                    btConnector.connect(address, 1)
+                }
+            }
+        }
+
+        BtConnector {
+            id: btConnector
+
+            onXChanged: console.log(val)
+            onYChanged: console.log(val)
         }
     }
 }
