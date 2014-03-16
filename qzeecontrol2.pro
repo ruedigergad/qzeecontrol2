@@ -1,7 +1,7 @@
 # Add more folders to ship with the application, here
-folder_01.source = qml/qzeecontrol2
-folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
+qqc.source = qml/qqc
+qqc.target = qml
+DEPLOYMENTFOLDERS = qqc
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -23,3 +23,8 @@ qtcAddDeployment()
 HEADERS += \
     btconnector.h \
     settingsadapter.h
+
+OTHER_FILES += \
+    qml/qqc/main.qml \
+    qml/qqc/BtSelectDialog.qml \
+    qml/qqc/ZeeControlTab.qml
