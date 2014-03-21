@@ -7,6 +7,9 @@ Tab {
 
     property string address
     property int n: 1
+    property bool useLocalUinput: false
+    property bool useGlobalUinput: false
+    property bool secondGlobalUinput: false
 
     anchors.fill: parent
     title: "Zee " + n
@@ -62,10 +65,14 @@ Tab {
                 onClicked: {
                     if (! btConnector.connected) {
                         btConnector.connect(address, 1)
-                        uinputAdapter.create("zeecontrol_" + n)
+                        if (useLocalUinput) {
+                            uinputAdapter.create("zeecontrol_" + n)
+                        }
                     } else {
                         btConnector.disconnect()
-                        uinputAdapter.destroy()
+                        if (useLocalUinput) {
+                            uinputAdapter.destroy()
+                        }
                     }
                 }
             }
@@ -139,14 +146,73 @@ Tab {
                 console.log(data)
             }
 
-            onAChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_A, val)
-            onBChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_B, val)
-            onCChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_C, val)
-            onDChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_D, val)
+            onAChanged: {
+                if (useLocalUinput) {
+                    uinputAdapter.emitClick(UinputAdapter.BUTTON_A, val)
+                }
+
+                if (useGlobalUinput) {
+                    if (secondGlobalUinput) {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_E, val)
+                    } else {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_A, val)
+                    }
+                }
+            }
+            onBChanged: {
+                if (useLocalUinput) {
+                    uinputAdapter.emitClick(UinputAdapter.BUTTON_B, val)
+                }
+
+                if (useGlobalUinput) {
+                    if (secondGlobalUinput) {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_F, val)
+                    } else {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_B, val)
+                    }
+                }
+            }
+            onCChanged: {
+                if (useLocalUinput) {
+                    uinputAdapter.emitClick(UinputAdapter.BUTTON_C, val)
+                }
+
+                if (useGlobalUinput) {
+                    if (secondGlobalUinput) {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_G, val)
+                    } else {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_C, val)
+                    }
+                }
+            }
+            onDChanged: {
+                if (useLocalUinput) {
+                    uinputAdapter.emitClick(UinputAdapter.BUTTON_D, val)
+                }
+
+                if (useGlobalUinput) {
+                    if (secondGlobalUinput) {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_H, val)
+                    } else {
+                        globalUinputAdapter.emitClick(UinputAdapter.BUTTON_D, val)
+                    }
+                }
+            }
 
             onStickMoved: {
                 console.log("x: " + x + "   y: " + y)
-                uinputAdapter.emitXYEvent(x, y)
+
+                if (useLocalUinput) {
+                    uinputAdapter.emitXYEvent(x, y)
+                }
+
+                if (useGlobalUinput) {
+                    if (secondGlobalUinput) {
+                        globalUinputAdapter.emitRxRyEvent(x, y)
+                    } else {
+                        globalUinputAdapter.emitXYEvent(x, y)
+                    }
+                }
             }
         }
 

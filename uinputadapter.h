@@ -38,7 +38,11 @@ public:
         BUTTON_A = KEY_A,
         BUTTON_B = KEY_B,
         BUTTON_C = KEY_C,
-        BUTTON_D = KEY_D
+        BUTTON_D = KEY_D,
+        BUTTON_E = KEY_E,
+        BUTTON_F = KEY_F,
+        BUTTON_G = KEY_G,
+        BUTTON_H = KEY_H
     };
 
 signals:
@@ -48,6 +52,7 @@ public slots:
     int destroy();
 
     int emitClick(int keyId, bool val);
+    int emitRxRyEvent(int x, int y);
     int emitXYEvent(int x, int y);
 
 private:

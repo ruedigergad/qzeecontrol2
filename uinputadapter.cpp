@@ -44,6 +44,8 @@ void UinputAdapter::create(QString name) {
             ret = ioctl(_fd, UI_SET_EVBIT, EV_ABS);
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_X);
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_Y);
+            ret = ioctl(_fd, UI_SET_ABSBIT, ABS_RX);
+            ret = ioctl(_fd, UI_SET_ABSBIT, ABS_RY);
 
             ret = ioctl(_fd, UI_SET_KEYBIT, KEY_A);
             ret = ioctl(_fd, UI_SET_KEYBIT, KEY_B);
@@ -61,6 +63,10 @@ void UinputAdapter::create(QString name) {
             uidev.absmax[ABS_X] = 127;
             uidev.absmin[ABS_Y] = -128;
             uidev.absmax[ABS_Y] = 127;
+            uidev.absmin[ABS_RX] = -512;
+            uidev.absmax[ABS_RX] = 511;
+            uidev.absmin[ABS_RY] = -512;
+            uidev.absmax[ABS_RY] = 511;
             ret = write(_fd, &uidev, sizeof(uidev));
 
             ret = ioctl(_fd, UI_DEV_CREATE);
@@ -91,6 +97,26 @@ int UinputAdapter::emitClick(int keyId, bool val) {
     ev.value = val ? 1 : 0;
 
     write(_fd, &ev, sizeof(ev));
+    syn();
+}
+
+int UinputAdapter::emitRxRyEvent(int x, int y) {
+    if (_fd < 0) {
+        qDebug("Uinput not initialized.");
+        return -1;
+    }
+
+    struct input_event ev[2];
+    memset(ev, 0, sizeof(ev));
+
+    ev[0].type = EV_ABS;
+    ev[0].code = ABS_RX;
+    ev[0].value = x;
+    ev[1].type = EV_ABS;
+    ev[1].code = ABS_RY;
+    ev[1].value = y;
+
+    write(_fd, ev, sizeof(ev));
     syn();
 }
 
