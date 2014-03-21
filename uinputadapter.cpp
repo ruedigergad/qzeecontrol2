@@ -63,10 +63,10 @@ void UinputAdapter::create(QString name) {
             uidev.absmax[ABS_X] = 127;
             uidev.absmin[ABS_Y] = -128;
             uidev.absmax[ABS_Y] = 127;
-            uidev.absmin[ABS_RX] = -512;
-            uidev.absmax[ABS_RX] = 511;
-            uidev.absmin[ABS_RY] = -512;
-            uidev.absmax[ABS_RY] = 511;
+            uidev.absmin[ABS_RX] = -128;
+            uidev.absmax[ABS_RX] = 127;
+            uidev.absmin[ABS_RY] = -128;
+            uidev.absmax[ABS_RY] = 127;
             ret = write(_fd, &uidev, sizeof(uidev));
 
             ret = ioctl(_fd, UI_DEV_CREATE);
