@@ -11,7 +11,8 @@ QT += bluetooth
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     btconnector.cpp \
-    settingsadapter.cpp
+    settingsadapter.cpp \
+    uinputadapter.cpp
 
 # Installation path
 # target.path =
@@ -22,7 +23,8 @@ qtcAddDeployment()
 
 HEADERS += \
     btconnector.h \
-    settingsadapter.h
+    settingsadapter.h \
+    uinputadapter.h
 
 OTHER_FILES += \
     qml/qqc/main.qml \

@@ -4,6 +4,7 @@
 
 #include "btconnector.h"
 #include "settingsadapter.h"
+#include "uinputadapter.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<BtConnector>("QZeeControl2", 1, 0, "BtConnector");
     qmlRegisterType<SettingsAdapter>("QZeeControl2", 1, 0, "SettingsAdapter");
+    qmlRegisterType<UinputAdapter>("QZeeControl2", 1, 0, "UinputAdapter");
 
     QtQuick2ControlsApplicationViewer viewer;
     viewer.setMainQmlFile(QStringLiteral("qml/qqc/main.qml"));

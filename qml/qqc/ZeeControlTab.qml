@@ -62,8 +62,10 @@ Tab {
                 onClicked: {
                     if (! btConnector.connected) {
                         btConnector.connect(address, 1)
+                        uinputAdapter.create("zeecontrol_" + n)
                     } else {
                         btConnector.disconnect()
+                        uinputAdapter.destroy()
                     }
                 }
             }
@@ -136,6 +138,16 @@ Tab {
             onDataUpdated: {
                 console.log(data)
             }
+
+            onAChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_A, val)
+            onBChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_B, val)
+            onCChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_C, val)
+            onDChanged: uinputAdapter.emitClick(UinputAdapter.BUTTON_D, val)
+
+            onStickMoved: {
+                console.log("x: " + x + "   y: " + y)
+                uinputAdapter.emitXYEvent(x, y)
+            }
         }
 
         SettingsAdapter {
@@ -144,6 +156,10 @@ Tab {
             Component.onCompleted: {
                 zeeControlTab.address = readString("ZeemoteAddress_" + n, "")
             }
+        }
+
+        UinputAdapter {
+            id: uinputAdapter
         }
     }
 }
