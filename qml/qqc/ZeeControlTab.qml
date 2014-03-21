@@ -6,6 +6,7 @@ Tab {
     id: zeeControlTab
 
     property string address
+    property bool debugOutput: false
     property int n: 1
     property bool useLocalUinput: false
     property bool useGlobalUinput: false
@@ -143,7 +144,9 @@ Tab {
             id: btConnector
 
             onDataUpdated: {
-                console.log(data)
+                if (debugOutput) {
+                    console.log(data)
+                }
             }
 
             onAChanged: {
@@ -200,7 +203,9 @@ Tab {
             }
 
             onStickMoved: {
-                console.log("x: " + x + "   y: " + y)
+                if (debugOutput) {
+                    console.log("x: " + x + "   y: " + y)
+                }
 
                 if (useLocalUinput) {
                     uinputAdapter.emitXYEvent(x, y)
