@@ -134,8 +134,8 @@ Tab {
                     height: 10
                     color: "red"
 
-                    x: moveArea.x + (moveArea.width * 0.5) + btDataProcessor.x - (cursorRectangle.width * 0.5)
-                    y: moveArea.y + (moveArea.height * 0.5) + btDataProcessor.y - (cursorRectangle.height * 0.5)
+                    x: moveArea.x + (moveArea.width * 0.5) + (btDataProcessor.x / 256 * moveArea.width) - (cursorRectangle.width * 0.5)
+                    y: moveArea.y + (moveArea.height * 0.5) + (btDataProcessor.y / 256 * moveArea.width) - (cursorRectangle.height * 0.5)
                 }
             }
         }
