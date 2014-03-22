@@ -87,28 +87,28 @@ Tab {
                 Label {
                     id: labelA
 
-                    color: btConnector.a ? "red" : "blue"
+                    color: btDataProcessor.a ? "red" : "blue"
                     font.pixelSize: 30
                     text: "A"
                 }
                 Label {
                     id: labelB
 
-                    color: btConnector.b ? "red" : "blue"
+                    color: btDataProcessor.b ? "red" : "blue"
                     font.pixelSize: 30
                     text: "B"
                 }
                 Label {
                     id: labelC
 
-                    color: btConnector.c ? "red" : "blue"
+                    color: btDataProcessor.c ? "red" : "blue"
                     font.pixelSize: 30
                     text: "C"
                 }
                 Label {
                     id: labelD
 
-                    color: btConnector.d ? "red" : "blue"
+                    color: btDataProcessor.d ? "red" : "blue"
                     font.pixelSize: 30
                     text: "D"
                 }
@@ -134,14 +134,20 @@ Tab {
                     height: 10
                     color: "red"
 
-                    x: moveArea.x + (moveArea.width * 0.5) + btConnector.x - (cursorRectangle.width * 0.5)
-                    y: moveArea.y + (moveArea.height * 0.5) + btConnector.y - (cursorRectangle.height * 0.5)
+                    x: moveArea.x + (moveArea.width * 0.5) + btDataProcessor.x - (cursorRectangle.width * 0.5)
+                    y: moveArea.y + (moveArea.height * 0.5) + btDataProcessor.y - (cursorRectangle.height * 0.5)
                 }
             }
         }
 
         BtConnector {
             id: btConnector
+
+            onDataReceived: btDataProcessor.processData(data)
+        }
+
+        BtDataProcessor {
+            id: btDataProcessor
 
             onDataUpdated: {
                 if (debugOutput) {
