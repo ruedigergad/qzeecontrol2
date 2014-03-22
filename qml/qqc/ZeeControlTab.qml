@@ -194,53 +194,53 @@ Tab {
 
             onAChanged: {
                 if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_A, val)
+                    uinputAdapter.emitClick(UinputAdapter.A, val)
                 }
 
                 if (useGlobalUinput) {
                     if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_E, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.E, val)
                     } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_A, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.A, val)
                     }
                 }
             }
             onBChanged: {
                 if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_B, val)
+                    uinputAdapter.emitClick(UinputAdapter.B, val)
                 }
 
                 if (useGlobalUinput) {
                     if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_F, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.F, val)
                     } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_B, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.B, val)
                     }
                 }
             }
             onCChanged: {
                 if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_C, val)
+                    uinputAdapter.emitClick(UinputAdapter.C, val)
                 }
 
                 if (useGlobalUinput) {
                     if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_G, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.G, val)
                     } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_C, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.C, val)
                     }
                 }
             }
             onDChanged: {
                 if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_D, val)
+                    uinputAdapter.emitClick(UinputAdapter.D, val)
                 }
 
                 if (useGlobalUinput) {
                     if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_H, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.H, val)
                     } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.UINPUT_KEY_D, val)
+                        globalUinputAdapter.emitClick(UinputAdapter.D, val)
                     }
                 }
             }
