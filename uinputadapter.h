@@ -79,6 +79,7 @@ public slots:
 
 private:
     int _fd;
+    QMetaEnum _keysMetaEnum;
 
     int syn();
 };

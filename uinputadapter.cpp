@@ -28,6 +28,9 @@ UinputAdapter::UinputAdapter(QObject *parent) :
     QObject(parent),
     _fd(-1)
 {
+    QMetaObject mo = UinputAdapter::staticMetaObject;
+    int enumIdx = mo.indexOfEnumerator("Keys");
+    _keysMetaEnum = mo.enumerator(enumIdx);
 }
 
 void UinputAdapter::create(QString name) {
@@ -46,6 +49,8 @@ void UinputAdapter::create(QString name) {
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_Y);
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_RX);
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_RY);
+
+
 
             ret = ioctl(_fd, UI_SET_KEYBIT, KEY_A);
             ret = ioctl(_fd, UI_SET_KEYBIT, KEY_B);
