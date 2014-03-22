@@ -1,7 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtBluetooth 5.2
-import QZeeControl2 1.0
+import QZeeControl 2.0
 
 Rectangle {
     id: btSelectDialog
