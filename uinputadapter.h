@@ -67,6 +67,9 @@ public:
         RIGHT = KEY_RIGHT
     };
 
+    Q_INVOKABLE QString keysEnumToString(Keys val);
+    Q_INVOKABLE int keysStringToEnum(QString val);
+
 signals:
 
 public slots:

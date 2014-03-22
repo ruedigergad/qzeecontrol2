@@ -148,6 +148,20 @@ int UinputAdapter::emitXYEvent(int x, int y) {
     syn();
 }
 
+QString UinputAdapter::keysEnumToString(Keys val) {
+    QMetaObject mo = UinputAdapter::staticMetaObject;
+    int enumIdx = mo.indexOfEnumerator("Keys");
+    QMetaEnum keysMetaEnum = mo.enumerator(enumIdx);
+    return QString(keysMetaEnum.valueToKey(val)).toUpper();
+}
+
+int UinputAdapter::keysStringToEnum(QString val) {
+    QMetaObject mo = UinputAdapter::staticMetaObject;
+    int enumIdx = mo.indexOfEnumerator("Keys");
+    QMetaEnum keysMetaEnum = mo.enumerator(enumIdx);
+    return keysMetaEnum.keyToValue(val.toUpper().toLocal8Bit().data());
+}
+
 int UinputAdapter::syn() {
     struct input_event ev;
     memset(&ev, 0, sizeof(ev));
