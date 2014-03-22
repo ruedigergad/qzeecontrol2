@@ -3,7 +3,7 @@ import QtQuick.Controls 1.1
 import QZeeControl 2.0
 
 ApplicationWindow {
-    title: qsTr("QZeeControl2")
+    title: qsTr("QZeeControl 2")
     width: 640
     height: 480
 
