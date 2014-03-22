@@ -54,7 +54,6 @@ void UinputAdapter::create(QString name) {
             int enumIdx = mo.indexOfEnumerator("Keys");
             QMetaEnum keysMetaEnum = mo.enumerator(enumIdx);
             for (int i = 0; i < keysMetaEnum.keyCount(); i++) {
-                qDebug() << i << keysMetaEnum.value(i);
                 ret = ioctl(_fd, UI_SET_KEYBIT, keysMetaEnum.value(i));
             }
 
