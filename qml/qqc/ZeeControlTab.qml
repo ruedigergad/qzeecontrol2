@@ -35,7 +35,7 @@ Tab {
 
                     placeholderText: "Please enter a Zeemote address or scan."
                     text: address
-                    width: zeeControlTab.width * 0.5
+                    width: zeeControlTab.width * 0.3
 
                     onTextChanged: {
                         if (text !== "") {
@@ -54,26 +54,25 @@ Tab {
                         mainStackView.push({item: Qt.resolvedUrl("BtSelectDialog.qml"), properties: {parentTab: zeeControlTab}})
                     }
                 }
-            }
 
-            Button {
-                id: connectButton
+                Button {
+                    id: connectButton
 
-                anchors.horizontalCenter: parent.horizontalCenter
-                enabled: addressTextField.text !== "" && (text === "Connect" || text === "Disconnect")
-                text: "Connect"
+                    enabled: addressTextField.text !== "" && (text === "Connect" || text === "Disconnect")
+                    text: "Connect"
 
-                onClicked: {
-                    if (! btConnector.connected) {
-                        btConnector.connect(address, 1)
-                        if (useLocalUinput) {
-                            uinputAdapter.create("zeecontrol_" + n)
-                        }
-                        text = "Connecting..."
-                    } else {
-                        btConnector.disconnect()
-                        if (useLocalUinput) {
-                            uinputAdapter.destroy()
+                    onClicked: {
+                        if (! btConnector.connected) {
+                            btConnector.connect(address, 1)
+                            if (useLocalUinput) {
+                                uinputAdapter.create("zeecontrol_" + n)
+                            }
+                            text = "Connecting..."
+                        } else {
+                            btConnector.disconnect()
+                            if (useLocalUinput) {
+                                uinputAdapter.destroy()
+                            }
                         }
                     }
                 }
