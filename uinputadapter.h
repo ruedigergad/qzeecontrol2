@@ -73,8 +73,8 @@ public:
 signals:
 
 public slots:
-    void create(QString name);
-    int destroy();
+    void createDevice(QString name);
+    int destroyDevice();
 
     int emitClick(int keyId, bool val);
     int emitRxRyEvent(int x, int y);

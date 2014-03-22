@@ -39,7 +39,7 @@ ApplicationWindow {
         id: globalUinputAdapter
 
         Component.onCompleted: {
-            create("qzeecontrol2_global")
+            createDevice("qzeecontrol2_global")
         }
     }
 

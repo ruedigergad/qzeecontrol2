@@ -8,11 +8,8 @@ Tab {
     property string address
     property bool debugOutput: false
     property int n: 1
-    property bool useLocalUinput: false
-    property bool useGlobalUinput: false
-    property bool secondGlobalUinput: false
 
-    property QtObject uinputAdapter
+    property QtObject uinputAdapter: null
 
     property int keyCodeA
     property int keyCodeB
@@ -25,9 +22,6 @@ Tab {
 
     anchors.fill: parent
     title: "Zee " + n
-
-    onUseGlobalUinputChanged: if (useGlobalUinput) uinputAdapter = globalUinputAdapter
-    onUseLocalUinputChanged: if (useLocalUinput) uinputAdapter = localUinputAdapter
 
     Rectangle {
         anchors.fill: parent
@@ -89,15 +83,9 @@ Tab {
                     onClicked: {
                         if (! btConnector.connected) {
                             btConnector.connect(address, 1)
-                            if (useLocalUinput) {
-                                uinputAdapter.create("zeecontrol_" + n)
-                            }
                             text = "Connecting..."
                         } else {
                             btConnector.disconnect()
-                            if (useLocalUinput) {
-                                uinputAdapter.destroy()
-                            }
                         }
                     }
                 }
@@ -164,7 +152,6 @@ Tab {
                 }
             }
 
-
             Row {
                 id: digitalStickRow
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -200,6 +187,43 @@ Tab {
                     text: "Right"
                 }
             }
+
+            Row {
+                id: configRow1
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                spacing: 20
+
+                CheckBox {
+                    id: useGlobalUinputCheckBox
+                    text: "Use Global Uinput"
+                    onCheckedChanged: {
+                        if (checked) {
+                            uinputAdapter = globalUinputAdapter
+                        } else {
+                            if (uinputAdapter === globalUinputAdapter) {
+                                uinputAdapter = null
+                            }
+                        }
+                    }
+                }
+
+                CheckBox {
+                    id: useLocalUinputCheckBox
+                    text: "Use Local Uinput"
+                    onCheckedChanged: {
+                        if (checked) {
+                            localUinputAdapter.createDevice("Zeemote_" + n)
+                            uinputAdapter = localUinputAdapter
+                        } else {
+                            if (uinputAdapter === localUinputAdapter) {
+                                uinputAdapter = null
+                                localUinputAdapter.destroyDevice()
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         BtConnector {
@@ -222,44 +246,29 @@ Tab {
                 }
             }
 
-            onAChanged: uinputAdapter.emitClick(keyCodeA, val)
-            onBChanged: uinputAdapter.emitClick(keyCodeB, val)
-            onCChanged: uinputAdapter.emitClick(keyCodeC, val)
-            onDChanged: uinputAdapter.emitClick(keyCodeD, val)
-            onUpChanged: uinputAdapter.emitClick(keyCodeUp, val)
-            onDownChanged: uinputAdapter.emitClick(keyCodeDown, val)
-            onLeftChanged: uinputAdapter.emitClick(keyCodeLeft, val)
-            onRightChanged: uinputAdapter.emitClick(keyCodeRight, val)
-//            onDChanged: {
-//                if (useLocalUinput) {
-//                    uinputAdapter.emitClick(UinputAdapter.D, val)
-//                }
-
-//                if (useGlobalUinput) {
-//                    if (secondGlobalUinput) {
-//                        globalUinputAdapter.emitClick(UinputAdapter.H, val)
-//                    } else {
-//                        globalUinputAdapter.emitClick(UinputAdapter.D, val)
-//                    }
-//                }
-//            }
+            onAChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeA, val)
+            onBChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeB, val)
+            onCChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeC, val)
+            onDChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeD, val)
+            onUpChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeUp, val)
+            onDownChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeDown, val)
+            onLeftChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeLeft, val)
+            onRightChanged: if (uinputAdapter !== null) uinputAdapter.emitClick(keyCodeRight, val)
 
             onStickMoved: {
                 if (debugOutput) {
                     console.log("x: " + x + "   y: " + y)
                 }
 
-                if (useLocalUinput) {
-                    uinputAdapter.emitXYEvent(x, y)
-                }
+                if (uinputAdapter !== null) uinputAdapter.emitXYEvent(x, y)
 
-                if (useGlobalUinput) {
-                    if (secondGlobalUinput) {
-                        globalUinputAdapter.emitRxRyEvent(x, y)
-                    } else {
-                        globalUinputAdapter.emitXYEvent(x, y)
-                    }
-                }
+//                if (useGlobalUinput) {
+//                    if (secondGlobalUinput) {
+//                        globalUinputAdapter.emitRxRyEvent(x, y)
+//                    } else {
+//                        globalUinputAdapter.emitXYEvent(x, y)
+//                    }
+//                }
             }
         }
 
@@ -268,8 +277,8 @@ Tab {
 
             Component.onCompleted: {
                 zeeControlTab.address = readString("ZeemoteAddress_" + n, "")
-                useLocalUinput = readBoolean("zeemote_" + n + "_useLocalUinput", false)
-                useGlobalUinput = readBoolean("zeemote_" + n + "_useGlobalUinput", true)
+                useLocalUinputCheckBox.checked = readBoolean("zeemote_" + n + "_useLocalUinput", false)
+                useGlobalUinputCheckBox.checked = readBoolean("zeemote_" + n + "_useGlobalUinput", true)
                 setKeyCodes()
             }
         }

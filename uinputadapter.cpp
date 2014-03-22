@@ -33,7 +33,7 @@ UinputAdapter::UinputAdapter(QObject *parent) :
 {
 }
 
-void UinputAdapter::create(QString name) {
+void UinputAdapter::createDevice(QString name) {
     if (_fd < 0) {
         qDebug("Opening uinput device.");
 
@@ -79,7 +79,7 @@ void UinputAdapter::create(QString name) {
     }
 }
 
-int UinputAdapter::destroy() {
+int UinputAdapter::destroyDevice() {
     if (_fd < 0) {
         qDebug("Uinput not initialized.");
         return -1;
