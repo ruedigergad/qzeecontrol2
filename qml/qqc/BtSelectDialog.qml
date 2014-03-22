@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtBluetooth 5.2
+import QZeeControl2 1.0
 
 Rectangle {
     id: btSelectDialog
@@ -56,6 +57,7 @@ Rectangle {
                     onDoubleClicked: {
                         console.log("Selected Zeemote address: " + address)
                         parentTab.address = address
+                        bluez5BtConnector.stopDiscovery()
                         mainStackView.pop()
                     }
                 }
@@ -74,6 +76,7 @@ Rectangle {
             text: "Cancel"
 
             onClicked: {
+                bluez5BtConnector.stopDiscovery()
                 mainStackView.pop()
             }
         }
@@ -97,6 +100,9 @@ Rectangle {
             switch (error) {
             case BluetoothDiscoveryModel.InputOutputError:
                 console.log("I/O Error")
+                console.log("Trying Bluez5...")
+                listModel.clear()
+                bluez5BtConnector.startDiscovery()
                 break;
             default:
                 console.log("Unknown error code: " + error)
@@ -124,5 +130,11 @@ Rectangle {
 
             listModel.append({address: service.deviceAddress})
         }
+    }
+
+    Bluez5BtConnector {
+        id: bluez5BtConnector
+
+        onDeviceFound: listModel.append({address: address})
     }
 }

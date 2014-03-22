@@ -48,10 +48,6 @@ ApplicationWindow {
 
     Bluez5BtConnector {
         id: testBluez
-
-        Component.onCompleted: {
-            startDiscovery()
-        }
     }
 
 }

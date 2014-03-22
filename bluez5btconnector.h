@@ -16,6 +16,7 @@ signals:
 
 public slots:
     void startDiscovery();
+    void stopDiscovery();
 
 private:
     QString _adapterPath;

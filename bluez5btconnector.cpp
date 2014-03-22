@@ -49,6 +49,12 @@ void Bluez5BtConnector::startDiscovery() {
     adapter.call("StartDiscovery");
 }
 
+void Bluez5BtConnector::stopDiscovery() {
+    qDebug("Stopping discovery...");
+    QDBusInterface adapter("org.bluez", _adapterPath, "org.bluez.Adapter1", QDBusConnection::systemBus());
+    adapter.call("StopDiscovery");
+}
+
 void Bluez5BtConnector::_propertiesChanged(QDBusMessage msg) {
     qDebug() << "Adapter properties changed:" << msg;
 
