@@ -12,6 +12,7 @@ public:
     explicit Bluez5BtConnector(QObject *parent = 0);
 
 signals:
+    void deviceFound(QString address);
 
 public slots:
     void startDiscovery();

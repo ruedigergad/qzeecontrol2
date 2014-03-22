@@ -51,4 +51,32 @@ void Bluez5BtConnector::startDiscovery() {
 
 void Bluez5BtConnector::_propertiesChanged(QDBusMessage msg) {
     qDebug() << "Adapter properties changed:" << msg;
+
+    if (msg.arguments().at(0).toString() == "org.bluez.Device1") {
+        qDebug() << "Found a device:" << msg.path();
+
+        //FIXME: This is quite brute force and ugly.
+        //       There has to be a better way to get the address of a discovered device?!
+        QString address = msg.path().split("dev_").last().split("_").join(":");
+        qDebug() << "Got address:" << address;
+        emit deviceFound(address);
+
+        const QDBusArgument argument = msg.arguments().at(1).value<QDBusArgument>();
+
+        if (argument.currentType() == QDBusArgument::MapType) {
+            qDebug("We have a map message.");
+
+            argument.beginMap();
+            while ( !argument.atEnd() ) {
+                    QString key;
+                    QVariant value;
+
+                    argument.beginMapEntry();
+                    argument >> key >> value;
+                    argument.endMapEntry();
+                    qDebug() << "Key:" << key << "\n  Value:" << value;
+            }
+            argument.endMap();
+        }
+    }
 }
