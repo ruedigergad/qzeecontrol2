@@ -30,14 +30,14 @@ Tab {
 
         function setKeyCodes() {
             var suffix = useAlternateMappingCheckBox.checked ? "_alternateMapping" : ""
-            keyCodeA = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_A" + suffix, "A"))
-            keyCodeB = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_B" + suffix, "B"))
-            keyCodeC = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_C" + suffix, "C"))
-            keyCodeD = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_D" + suffix, "D"))
-            keyCodeUp = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_UP" + suffix, "UP"))
-            keyCodeDown = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_DOWN" + suffix, "DOWN"))
-            keyCodeLeft = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_LEFT" + suffix, "LEFT"))
-            keyCodeRight = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_RIGHT" + suffix, "RIGHT"))
+            keyCodeA = settingsAdapter.readInt("zeemote_" + n + "_keycode_A" + suffix, UinputAdapter.A)
+            keyCodeB = settingsAdapter.readInt("zeemote_" + n + "_keycode_B" + suffix, UinputAdapter.B)
+            keyCodeC = settingsAdapter.readInt("zeemote_" + n + "_keycode_C" + suffix, UinputAdapter.C)
+            keyCodeD = settingsAdapter.readInt("zeemote_" + n + "_keycode_D" + suffix, UinputAdapter.D)
+            keyCodeUp = settingsAdapter.readInt("zeemote_" + n + "_keycode_UP" + suffix, UinputAdapter.UP)
+            keyCodeDown = settingsAdapter.readInt("zeemote_" + n + "_keycode_DOWN" + suffix, UinputAdapter.DOWN)
+            keyCodeLeft = settingsAdapter.readInt("zeemote_" + n + "_keycode_LEFT" + suffix, UinputAdapter.LEFT)
+            keyCodeRight = settingsAdapter.readInt("zeemote_" + n + "_keycode_RIGHT" + suffix, UinputAdapter.RIGHT)
         }
 
         Column {

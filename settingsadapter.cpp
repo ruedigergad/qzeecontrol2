@@ -30,11 +30,19 @@ bool SettingsAdapter::readBoolean(const QString &key, const bool &defaultValue) 
     return QSettings().value(key, defaultValue).toBool();
 }
 
+int SettingsAdapter::readInt(const QString &key, const int &defaultValue) {
+    return QSettings().value(key, defaultValue).toInt();
+}
+
 QString SettingsAdapter::readString(const QString &key, const QString &defaultValue) {
     return QSettings().value(key, defaultValue).toString();
 }
 
 void SettingsAdapter::setBoolean(const QString &key, const bool &value) {
+    QSettings().setValue(key, value);
+}
+
+void SettingsAdapter::setInt(const QString &key, const int &value) {
     QSettings().setValue(key, value);
 }
 
