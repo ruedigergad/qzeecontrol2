@@ -6,13 +6,15 @@ DEPLOYMENTFOLDERS = qqc
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT += bluetooth
+QT += bluetooth dbus
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     btconnector.cpp \
     settingsadapter.cpp \
-    uinputadapter.cpp
+    uinputadapter.cpp \
+    bluez5btconnector.cpp \
+    btdataprocessor.cpp
 
 # Installation path
 # target.path =
@@ -24,7 +26,9 @@ qtcAddDeployment()
 HEADERS += \
     btconnector.h \
     settingsadapter.h \
-    uinputadapter.h
+    uinputadapter.h \
+    bluez5btconnector.h \
+    btdataprocessor.h
 
 OTHER_FILES += \
     qml/qqc/main.qml \
