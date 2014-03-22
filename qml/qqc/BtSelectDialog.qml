@@ -57,7 +57,7 @@ Rectangle {
                     onDoubleClicked: {
                         console.log("Selected Zeemote address: " + address)
                         parentTab.address = address
-                        bluez5BtConnector.stopDiscovery()
+                        bluez5BtAdapter.stopDiscovery()
                         mainStackView.pop()
                     }
                 }
@@ -76,7 +76,7 @@ Rectangle {
             text: "Cancel"
 
             onClicked: {
-                bluez5BtConnector.stopDiscovery()
+                bluez5BtAdapter.stopDiscovery()
                 mainStackView.pop()
             }
         }
@@ -102,7 +102,7 @@ Rectangle {
                 console.log("I/O Error")
                 console.log("Trying Bluez5...")
                 listModel.clear()
-                bluez5BtConnector.startDiscovery()
+                bluez5BtAdapter.startDiscovery()
                 break;
             default:
                 console.log("Unknown error code: " + error)
@@ -132,8 +132,8 @@ Rectangle {
         }
     }
 
-    Bluez5BtConnector {
-        id: bluez5BtConnector
+    Bluez5BtAdapter {
+        id: bluez5BtAdapter
 
         onDeviceFound: listModel.append({address: address})
     }

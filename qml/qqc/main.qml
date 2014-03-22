@@ -46,8 +46,4 @@ ApplicationWindow {
         }
     }
 
-    Bluez5BtConnector {
-        id: testBluez
-    }
-
 }

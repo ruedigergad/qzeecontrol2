@@ -13,8 +13,8 @@ SOURCES += main.cpp \
     btconnector.cpp \
     settingsadapter.cpp \
     uinputadapter.cpp \
-    bluez5btconnector.cpp \
-    btdataprocessor.cpp
+    btdataprocessor.cpp \
+    bluez5btadapter.cpp
 
 # Installation path
 # target.path =
@@ -27,8 +27,8 @@ HEADERS += \
     btconnector.h \
     settingsadapter.h \
     uinputadapter.h \
-    bluez5btconnector.h \
-    btdataprocessor.h
+    btdataprocessor.h \
+    bluez5btadapter.h
 
 OTHER_FILES += \
     qml/qqc/main.qml \

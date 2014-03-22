@@ -1,15 +1,15 @@
-#ifndef BLUEZ5BTCONNECTOR_H
-#define BLUEZ5BTCONNECTOR_H
+#ifndef BLUEZ5BTADAPTER_H
+#define BLUEZ5BTADAPTER_H
 
 #include <QObject>
 #include <QDBusArgument>
 #include <QDBusMessage>
 
-class Bluez5BtConnector : public QObject
+class Bluez5BtAdapter : public QObject
 {
     Q_OBJECT
 public:
-    explicit Bluez5BtConnector(QObject *parent = 0);
+    explicit Bluez5BtAdapter(QObject *parent = 0);
 
 signals:
     void deviceFound(QString address);
@@ -28,4 +28,4 @@ private slots:
 
 };
 
-#endif // BLUEZ5BTCONNECTOR_H
+#endif // BLUEZ5BTADAPTER_H

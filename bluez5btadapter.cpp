@@ -1,10 +1,10 @@
-#include "bluez5btconnector.h"
+#include "bluez5btadapter.h"
 
 #include <QDBusArgument>
 #include <QDBusInterface>
 #include <QDebug>
 
-Bluez5BtConnector::Bluez5BtConnector(QObject *parent) :
+Bluez5BtAdapter::Bluez5BtAdapter(QObject *parent) :
     QObject(parent)
 {
     qDebug("Bluez5BtConnector constructor...");
@@ -43,19 +43,19 @@ Bluez5BtConnector::Bluez5BtConnector(QObject *parent) :
 
 }
 
-void Bluez5BtConnector::startDiscovery() {
+void Bluez5BtAdapter::startDiscovery() {
     qDebug("Starting discovery...");
     QDBusInterface adapter("org.bluez", _adapterPath, "org.bluez.Adapter1", QDBusConnection::systemBus());
     adapter.call("StartDiscovery");
 }
 
-void Bluez5BtConnector::stopDiscovery() {
+void Bluez5BtAdapter::stopDiscovery() {
     qDebug("Stopping discovery...");
     QDBusInterface adapter("org.bluez", _adapterPath, "org.bluez.Adapter1", QDBusConnection::systemBus());
     adapter.call("StopDiscovery");
 }
 
-void Bluez5BtConnector::_propertiesChanged(QDBusMessage msg) {
+void Bluez5BtAdapter::_propertiesChanged(QDBusMessage msg) {
     qDebug() << "Adapter properties changed:" << msg;
 
     if (msg.arguments().at(0).toString() == "org.bluez.Device1") {
