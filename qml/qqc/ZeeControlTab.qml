@@ -29,14 +29,15 @@ Tab {
         color: "lightgray"
 
         function setKeyCodes() {
-            keyCodeA = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_A", "A"))
-            keyCodeB = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_B", "B"))
-            keyCodeC = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_C", "C"))
-            keyCodeD = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_D", "D"))
-            keyCodeUp = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_UP", "UP"))
-            keyCodeDown = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_DOWN", "DOWN"))
-            keyCodeLeft = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_LEFT", "LEFT"))
-            keyCodeRight = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_RIGHT", "RIGHT"))
+            var suffix = useAlternateMappingCheckBox.checked ? "_alternateMapping" : ""
+            keyCodeA = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_A" + suffix, "A"))
+            keyCodeB = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_B" + suffix, "B"))
+            keyCodeC = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_C" + suffix, "C"))
+            keyCodeD = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_D" + suffix, "D"))
+            keyCodeUp = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_UP" + suffix, "UP"))
+            keyCodeDown = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_DOWN" + suffix, "DOWN"))
+            keyCodeLeft = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_LEFT" + suffix, "LEFT"))
+            keyCodeRight = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_RIGHT" + suffix, "RIGHT"))
         }
 
         Column {
@@ -196,7 +197,7 @@ Tab {
 
                 CheckBox {
                     id: useGlobalUinputCheckBox
-                    text: "Use Global Uinput"
+                    text: "Global Uinput"
                     onCheckedChanged: {
                         if (checked) {
                             uinputAdapter = globalUinputAdapter
@@ -211,7 +212,7 @@ Tab {
 
                 CheckBox {
                     id: useLocalUinputCheckBox
-                    text: "Use Local Uinput"
+                    text: "Local Uinput"
                     onCheckedChanged: {
                         if (checked) {
                             localUinputAdapter.createDevice("Zeemote_" + n)
@@ -223,6 +224,14 @@ Tab {
                             }
                         }
                         settingsAdapter.setBoolean("zeemote_" + n + "_useLocalUinput", checked)
+                    }
+                }
+
+                CheckBox {
+                    id: useAlternateMappingCheckBox
+                    text: "Alternate Mapping"
+                    onCheckedChanged: {
+                        settingsAdapter.setBoolean("zeemote_" + n + "_useAlternateMapping", checked)
                     }
                 }
             }
@@ -262,15 +271,13 @@ Tab {
                     console.log("x: " + x + "   y: " + y)
                 }
 
-                if (uinputAdapter !== null) uinputAdapter.emitXYEvent(x, y)
-
-//                if (useGlobalUinput) {
-//                    if (secondGlobalUinput) {
-//                        globalUinputAdapter.emitRxRyEvent(x, y)
-//                    } else {
-//                        globalUinputAdapter.emitXYEvent(x, y)
-//                    }
-//                }
+                if (uinputAdapter !== null) {
+                    if (useAlternateMappingCheckBox.checked) {
+                        uinputAdapter.emitRxRyEvent(x, y)
+                    } else {
+                        uinputAdapter.emitXYEvent(x, y)
+                    }
+                }
             }
         }
 
@@ -281,6 +288,7 @@ Tab {
                 zeeControlTab.address = readString("ZeemoteAddress_" + n, "")
                 useLocalUinputCheckBox.checked = readBoolean("zeemote_" + n + "_useLocalUinput", false)
                 useGlobalUinputCheckBox.checked = readBoolean("zeemote_" + n + "_useGlobalUinput", true)
+                useAlternateMappingCheckBox.checked = readBoolean("zeemote_" + n + "_useAlternateMapping", false)
                 setKeyCodes()
             }
         }
