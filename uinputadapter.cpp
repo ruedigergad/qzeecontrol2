@@ -85,7 +85,9 @@ int UinputAdapter::destroy() {
         return -1;
     }
 
-    return ioctl(_fd, UI_DEV_DESTROY);
+    int ret = ioctl(_fd, UI_DEV_DESTROY);
+    _fd = -1;
+    return ret;
 }
 
 int UinputAdapter::emitClick(int keyId, bool val) {
