@@ -125,7 +125,7 @@ Tab {
                     color: "gray"
 
                     height: width
-                    width: zeeControlTab.width * 0.5
+                    width: zeeControlTab.width * 0.3
                 }
 
                 Rectangle {
