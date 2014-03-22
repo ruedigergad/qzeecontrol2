@@ -60,8 +60,8 @@ Tab {
                 id: connectButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
-                enabled: addressTextField.text !== ""
-                text: btConnector.connected ? "Disconnect" : "Connect"
+                enabled: addressTextField.text !== "" && (text === "Connect" || text === "Disconnect")
+                text: "Connect"
 
                 onClicked: {
                     if (! btConnector.connected) {
@@ -69,6 +69,7 @@ Tab {
                         if (useLocalUinput) {
                             uinputAdapter.create("zeecontrol_" + n)
                         }
+                        text = "Connecting..."
                     } else {
                         btConnector.disconnect()
                         if (useLocalUinput) {
@@ -179,6 +180,11 @@ Tab {
 
         BtConnector {
             id: btConnector
+
+            onConnectedChanged: {
+                connectButton.text = connected ? "Disconnect" : "Connect"
+                connectButton.enabled = true
+            }
 
             onDataReceived: btDataProcessor.processData(data)
         }
