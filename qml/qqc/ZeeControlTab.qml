@@ -138,6 +138,43 @@ Tab {
                     y: moveArea.y + (moveArea.height * 0.5) + (btDataProcessor.y / 256 * moveArea.width) - (cursorRectangle.height * 0.5)
                 }
             }
+
+
+            Row {
+                id: digitalStickRow
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                spacing: 20
+
+                Label {
+                    id: labelUp
+
+                    color: btDataProcessor.up ? "red" : "blue"
+                    font.pixelSize: 30
+                    text: "Up"
+                }
+                Label {
+                    id: labelDown
+
+                    color: btDataProcessor.down ? "red" : "blue"
+                    font.pixelSize: 30
+                    text: "Down"
+                }
+                Label {
+                    id: labelLeft
+
+                    color: btDataProcessor.left ? "red" : "blue"
+                    font.pixelSize: 30
+                    text: "Left"
+                }
+                Label {
+                    id: labelRight
+
+                    color: btDataProcessor.right ? "red" : "blue"
+                    font.pixelSize: 30
+                    text: "Right"
+                }
+            }
         }
 
         BtConnector {
