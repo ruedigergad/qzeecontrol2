@@ -205,6 +205,7 @@ Tab {
                                 uinputAdapter = null
                             }
                         }
+                        settingsAdapter.setBoolean("zeemote_" + n + "_useGlobalUinput", checked)
                     }
                 }
 
@@ -221,6 +222,7 @@ Tab {
                                 localUinputAdapter.destroyDevice()
                             }
                         }
+                        settingsAdapter.setBoolean("zeemote_" + n + "_useLocalUinput", checked)
                     }
                 }
             }
