@@ -55,7 +55,6 @@ void BtConnector::connect(QString address, int port){
 
     qDebug("Connecting...");
     socket->connectToService(QBluetoothAddress(address), port);
-    qDebug("Connected.");
 
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(readData()));
 }
