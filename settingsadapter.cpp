@@ -26,8 +26,16 @@ SettingsAdapter::SettingsAdapter(QObject *parent) :
 {
 }
 
+bool SettingsAdapter::readBoolean(const QString &key, const bool &defaultValue) {
+    return QSettings().value(key, defaultValue).toBool();
+}
+
 QString SettingsAdapter::readString(const QString &key, const QString &defaultValue) {
     return QSettings().value(key, defaultValue).toString();
+}
+
+void SettingsAdapter::setBoolean(const QString &key, const bool &value) {
+    QSettings().setValue(key, value);
 }
 
 void SettingsAdapter::setString(const QString &key, const QString &value) {

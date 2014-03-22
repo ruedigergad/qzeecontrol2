@@ -12,13 +12,38 @@ Tab {
     property bool useGlobalUinput: false
     property bool secondGlobalUinput: false
 
+    property QtObject uinputAdapter
+
+    property int keyCodeA
+    property int keyCodeB
+    property int keyCodeC
+    property int keyCodeD
+    property int keyCodeUp
+    property int keyCodeDown
+    property int keyCodeLeft
+    property int keyCodeRight
+
     anchors.fill: parent
     title: "Zee " + n
+
+    onUseGlobalUinputChanged: if (useGlobalUinput) uinputAdapter = globalUinputAdapter
+    onUseLocalUinputChanged: if (useLocalUinput) uinputAdapter = localUinputAdapter
 
     Rectangle {
         anchors.fill: parent
 
         color: "lightgray"
+
+        function setKeyCodes() {
+            keyCodeA = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_A", "A"))
+            keyCodeB = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_B", "B"))
+            keyCodeC = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_C", "C"))
+            keyCodeD = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_D", "D"))
+            keyCodeUp = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_UP", "UP"))
+            keyCodeDown = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_DOWN", "DOWN"))
+            keyCodeLeft = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_LEFT", "LEFT"))
+            keyCodeRight = globalUinputAdapter.keysStringToEnum(settingsAdapter.readString("zeemote_" + n + "_keycode_RIGHT", "RIGHT"))
+        }
 
         Column {
             anchors.fill: parent
@@ -197,58 +222,27 @@ Tab {
                 }
             }
 
-            onAChanged: {
-                if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.A, val)
-                }
+            onAChanged: uinputAdapter.emitClick(keyCodeA, val)
+            onBChanged: uinputAdapter.emitClick(keyCodeB, val)
+            onCChanged: uinputAdapter.emitClick(keyCodeC, val)
+            onDChanged: uinputAdapter.emitClick(keyCodeD, val)
+            onUpChanged: uinputAdapter.emitClick(keyCodeUp, val)
+            onDownChanged: uinputAdapter.emitClick(keyCodeDown, val)
+            onLeftChanged: uinputAdapter.emitClick(keyCodeLeft, val)
+            onRightChanged: uinputAdapter.emitClick(keyCodeRight, val)
+//            onDChanged: {
+//                if (useLocalUinput) {
+//                    uinputAdapter.emitClick(UinputAdapter.D, val)
+//                }
 
-                if (useGlobalUinput) {
-                    if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.E, val)
-                    } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.A, val)
-                    }
-                }
-            }
-            onBChanged: {
-                if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.B, val)
-                }
-
-                if (useGlobalUinput) {
-                    if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.F, val)
-                    } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.B, val)
-                    }
-                }
-            }
-            onCChanged: {
-                if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.C, val)
-                }
-
-                if (useGlobalUinput) {
-                    if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.G, val)
-                    } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.C, val)
-                    }
-                }
-            }
-            onDChanged: {
-                if (useLocalUinput) {
-                    uinputAdapter.emitClick(UinputAdapter.D, val)
-                }
-
-                if (useGlobalUinput) {
-                    if (secondGlobalUinput) {
-                        globalUinputAdapter.emitClick(UinputAdapter.H, val)
-                    } else {
-                        globalUinputAdapter.emitClick(UinputAdapter.D, val)
-                    }
-                }
-            }
+//                if (useGlobalUinput) {
+//                    if (secondGlobalUinput) {
+//                        globalUinputAdapter.emitClick(UinputAdapter.H, val)
+//                    } else {
+//                        globalUinputAdapter.emitClick(UinputAdapter.D, val)
+//                    }
+//                }
+//            }
 
             onStickMoved: {
                 if (debugOutput) {
@@ -274,11 +268,14 @@ Tab {
 
             Component.onCompleted: {
                 zeeControlTab.address = readString("ZeemoteAddress_" + n, "")
+                useLocalUinput = readBoolean("zeemote_" + n + "_useLocalUinput", false)
+                useGlobalUinput = readBoolean("zeemote_" + n + "_useGlobalUinput", true)
+                setKeyCodes()
             }
         }
 
         UinputAdapter {
-            id: uinputAdapter
+            id: localUinputAdapter
         }
     }
 }

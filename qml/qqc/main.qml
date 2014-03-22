@@ -26,14 +26,11 @@ ApplicationWindow {
             ZeeControlTab {
                 id: zee1
                 n: 1
-                useGlobalUinput: true
             }
 
             ZeeControlTab {
                 id: zee2
                 n: 2
-                useGlobalUinput: true
-                secondGlobalUinput: true
             }
         }
     }
