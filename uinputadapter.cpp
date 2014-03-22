@@ -24,13 +24,13 @@
 #include <unistd.h>
 #include <linux/uinput.h>
 
+#include <QDebug>
+#include <QMetaEnum>
+
 UinputAdapter::UinputAdapter(QObject *parent) :
     QObject(parent),
     _fd(-1)
 {
-    QMetaObject mo = UinputAdapter::staticMetaObject;
-    int enumIdx = mo.indexOfEnumerator("Keys");
-    _keysMetaEnum = mo.enumerator(enumIdx);
 }
 
 void UinputAdapter::create(QString name) {
@@ -50,12 +50,13 @@ void UinputAdapter::create(QString name) {
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_RX);
             ret = ioctl(_fd, UI_SET_ABSBIT, ABS_RY);
 
-
-
-            ret = ioctl(_fd, UI_SET_KEYBIT, KEY_A);
-            ret = ioctl(_fd, UI_SET_KEYBIT, KEY_B);
-            ret = ioctl(_fd, UI_SET_KEYBIT, KEY_C);
-            ret = ioctl(_fd, UI_SET_KEYBIT, KEY_D);
+            QMetaObject mo = UinputAdapter::staticMetaObject;
+            int enumIdx = mo.indexOfEnumerator("Keys");
+            QMetaEnum keysMetaEnum = mo.enumerator(enumIdx);
+            for (int i = 0; i < keysMetaEnum.keyCount(); i++) {
+                qDebug() << i << keysMetaEnum.value(i);
+                ret = ioctl(_fd, UI_SET_KEYBIT, keysMetaEnum.value(i));
+            }
 
             struct uinput_user_dev uidev;
             memset(&uidev, 0, sizeof(uidev));

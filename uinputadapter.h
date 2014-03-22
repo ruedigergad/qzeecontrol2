@@ -29,7 +29,7 @@ class UinputAdapter : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Buttons)
+    Q_ENUMS(Keys)
 
 public:
     explicit UinputAdapter(QObject *parent = 0);
@@ -64,7 +64,7 @@ public:
         UP = KEY_UP,
         DOWN = KEY_DOWN,
         LEFT = KEY_LEFT,
-        RIGHT = KEY_RIGHT,
+        RIGHT = KEY_RIGHT
     };
 
 signals:
@@ -79,7 +79,6 @@ public slots:
 
 private:
     int _fd;
-    QMetaEnum _keysMetaEnum;
 
     int syn();
 };
