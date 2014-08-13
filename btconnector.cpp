@@ -24,6 +24,7 @@
 BtConnector::BtConnector(QObject *parent)
     : QObject(parent){
     _connected = false;
+    socket = NULL;
 }
 
 void BtConnector::connect(QString address, int port){
@@ -51,7 +52,7 @@ void BtConnector::disconnect(){
         socket->close();
 
     delete socket;
-    socket = 0;
+    socket = NULL;
 }
 
 void BtConnector::readData(){
